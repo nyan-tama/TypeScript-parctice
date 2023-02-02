@@ -1,22 +1,41 @@
+import { toNamespacedPath } from "path"
 
-const startTime = performance.now(); // 開始時間
-
-
-for (let i: number = 1; i <= 100; i++) {
-    if (i % 5 === 0 && i % 3 === 0) {
-        console.log("鮭フレーク")
-        continue
-    } else if (i % 5 === 0) {
-        console.log("フレーク")
-        continue
-    } else if (i % 3 === 0) {
-        console.log("鮭")
-        continue
-    } else {
-        console.log(i)
-    }
+type User = {
+    name: string
+    age: number
+    premiumUser: boolean
 }
 
-const endTime = performance.now(); // 終了時間
+const data: string = `
+tama,30,1
+mike,23,1
+pochi,20,0
+`
 
-console.log(endTime - startTime); // 何ミリ秒かかったかを表示する
+const users: User[] = []
+const lines = data.split("\n")
+console.log(lines)
+
+for (const line of lines) {
+    if (line == "") {
+        continue
+    }
+    const [name, ageString, premiumUserString] = line.split(",")
+    const age = Number(ageString)
+    const premiumUser = premiumUserString === "1"
+
+    users.push({
+        name,
+        age,
+        premiumUser
+    })
+}
+
+console.log(users)
+for (const user of users) {
+    if (user.premiumUser) {
+        console.log(`${user.name} (${user.age})はプレミアムユーザーです`)
+    } else {
+        console.log(`${user.name} (${user.age})はプレミアムユーザーではないです`)
+    }
+}
